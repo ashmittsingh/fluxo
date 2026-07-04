@@ -1,11 +1,13 @@
 import React from 'react'
+import prisma from '@/db/db'
 
-const page = () => {
+const Page = async () => {
+  const users = await prisma.user.findMany();
   return (
     <>
-    Fluxo 
+     {JSON.stringify(users)}
     </>
   )
 }
 
-export default page
+export default Page;
