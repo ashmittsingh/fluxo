@@ -3,19 +3,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Link from "next/link";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Controller } from "react-hook-form";
-import {
-    Field,
-    FieldLabel,
-    FieldError,
-} from "@/components/ui/field";
 import { useRouter } from "next/navigation";
-import { Button } from "./ui/button";
 import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
+import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import Image from "next/image";
 
 const signupSchema = z.object({
     email: z.email("Please Enter A Valid Email Address"),
@@ -28,6 +22,18 @@ const signupSchema = z.object({
 });
 
 type SignupFormValues = z.infer<typeof signupSchema>;
+
+function GoogleMark() {
+    return (
+        <span
+            aria-hidden="true"
+            className="flex h-4 w-4 items-center justify-center rounded-full border border-current text-[10px] leading-none"
+            style={{ fontFamily: "var(--font-display, Georgia, serif)" }}
+        >
+            G
+        </span>
+    );
+}
 
 export function SignupForm() {
     const router = useRouter();
@@ -62,85 +68,190 @@ export function SignupForm() {
     const isPending = form.formState.isSubmitting;
 
     return (
-        <div className="flex flex-col gap-6">
-            <Card >
-                <CardHeader className="text-center">
-                    <CardTitle>Create An Account</CardTitle>
-                    <CardDescription>
-                        Sign Up To Create An Account
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <div className="grid gap-6">
-                            <div className="grid gap-6">
-                                <Controller
-                                    control={form.control}
-                                    name="email"
-                                    render={({ field }) => (
-                                        <Field>
-                                            <FieldLabel>Email</FieldLabel>
-                                            <Input type="email" placeholder="m@example.com" {...field} />
-                                            <FieldError errors={[form.formState.errors.email]} />
-                                        </Field>
-                                    )} />
-                                <Controller
-                                    control={form.control}
-                                    name="password"
-                                    render={({ field }) => (
-                                        <Field>
-                                            <FieldLabel>Password</FieldLabel>
+        <div className="mx-auto w-full max-w-sm animate-[fade-in-up_0.6s_ease-out_both] px-1 sm:px-0">
+            <Link
+                href="/"
+                className="mb-6 inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2em] uppercase md:hidden"
+            >
+                <span className="h-1.5 w-1.5 rounded-full bg-[#0B0B0C]" />
+                Fluxo
+            </Link>
 
-                                            <Input type="password" placeholder="*********" {...field} />
+            <p className="font-mono text-[11px] tracking-[0.3em] text-[#6E6E6E] uppercase">
+                Sign up
+            </p>
+            <h1
+                className="mt-2 text-[1.9rem] leading-[1.06] text-[#0B0B0C] sm:mt-3 sm:text-[2.35rem]"
+                style={{ fontFamily: "var(--font-display, Georgia, serif)" }}
+            >
+                Create Account
+            </h1>
+            <p className="mt-2 text-[0.9rem] leading-6 text-[#6E6E6E] sm:mt-3 sm:text-[0.93rem]">
+                Start Building With Fluxo.
+            </p>
 
-                                            <FieldError errors={[form.formState.errors.password]} />
-                                        </Field>
-                                    )} />
-                                <Controller
-                                    control={form.control}
-                                    name="confirmPassword"
-                                    render={({ field }) => (
-                                        <Field>
-                                            <FieldLabel>Confirm Password</FieldLabel>
-
-                                            <Input type="password" placeholder="*********" {...field} />
-
-                                            <FieldError errors={[form.formState.errors.confirmPassword]} />
-                                        </Field>
-                                    )} />
-                                <Button type="submit" className="w-full" disabled={isPending}>
-                                    Sign Up
-                                </Button>
-                            </div>
-                            <div className="flex flex-col gap-4">
-                                <Button
-                                    variant="outline"
-                                    className="w-full"
-                                    type="button"
-                                    disabled={isPending}
-                                >
-                                    Continue With Google
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    className="w-full"
-                                    type="button"
-                                    disabled={isPending}
-                                >
-                                    Continue With GitHub
-                                </Button>
-                            </div>
-                            <div className="text-center text-sm">
-                                Already Have A Account?{" "}
-                                <Link href="/login"
-                                    className="underline underline-offset-4">
-                                    Login
-                                </Link>
-                            </div>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 flex flex-col gap-5 sm:mt-8 sm:gap-6" noValidate>
+                <Controller
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                        <div className="group relative">
+                            <label
+                                htmlFor="email"
+                                className="block text-[11px] font-medium tracking-[0.15em] text-[#6E6E6E] uppercase"
+                            >
+                                Email
+                            </label>
+                            <input
+                                {...field}
+                                id="email"
+                                type="email"
+                                autoComplete="email"
+                                placeholder="you@company.com"
+                                aria-invalid={!!form.formState.errors.email}
+                                aria-describedby={form.formState.errors.email ? "email-error" : undefined}
+                                className="peer mt-2 w-full border-0 border-b border-[#E2E2E0] bg-transparent pb-2 text-[0.95rem] text-[#0B0B0C] outline-none placeholder:text-[#B9B9B6] focus:border-[#E2E2E0]"
+                            />
+                            <span className="pointer-events-none absolute bottom-0 left-0 h-[1.5px] w-full origin-left scale-x-0 bg-[#0B0B0C] transition-transform duration-300 ease-out peer-focus:scale-x-100" />
+                            {form.formState.errors.email && (
+                                <p id="email-error" className="mt-2 text-[12px] text-[#0B0B0C] underline decoration-[#0B0B0C]/40 underline-offset-2">
+                                    {form.formState.errors.email.message}
+                                </p>
+                            )}
                         </div>
-                    </form>
-                </CardContent>
-            </Card>
+                    )}
+                />
+
+                <Controller
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                        <div className="group relative">
+                            <label
+                                htmlFor="password"
+                                className="block text-[11px] font-medium tracking-[0.15em] text-[#6E6E6E] uppercase"
+                            >
+                                Password
+                            </label>
+                            <input
+                                {...field}
+                                id="password"
+                                type="password"
+                                autoComplete="new-password"
+                                placeholder="••••••••"
+                                aria-invalid={!!form.formState.errors.password}
+                                aria-describedby={form.formState.errors.password ? "password-error" : undefined}
+                                className="peer mt-2 w-full border-0 border-b border-[#E2E2E0] bg-transparent pb-2 text-[0.95rem] text-[#0B0B0C] outline-none placeholder:text-[#B9B9B6] focus:border-[#E2E2E0]"
+                            />
+                            <span className="pointer-events-none absolute bottom-0 left-0 h-[1.5px] w-full origin-left scale-x-0 bg-[#0B0B0C] transition-transform duration-300 ease-out peer-focus:scale-x-100" />
+                            {form.formState.errors.password && (
+                                <p id="password-error" className="mt-2 text-[12px] text-[#0B0B0C] underline decoration-[#0B0B0C]/40 underline-offset-2">
+                                    {form.formState.errors.password.message}
+                                </p>
+                            )}
+                        </div>
+                    )}
+                />
+
+                <Controller
+                    control={form.control}
+                    name="confirmPassword"
+                    render={({ field }) => (
+                        <div className="group relative">
+                            <label
+                                htmlFor="confirmPassword"
+                                className="block text-[11px] font-medium tracking-[0.15em] text-[#6E6E6E] uppercase"
+                            >
+                                Confirm Password
+                            </label>
+                            <input
+                                {...field}
+                                id="confirmPassword"
+                                type="password"
+                                autoComplete="new-password"
+                                placeholder="••••••••"
+                                aria-invalid={!!form.formState.errors.confirmPassword}
+                                aria-describedby={form.formState.errors.confirmPassword ? "confirmPassword-error" : undefined}
+                                className="peer mt-2 w-full border-0 border-b border-[#E2E2E0] bg-transparent pb-2 text-[0.95rem] text-[#0B0B0C] outline-none placeholder:text-[#B9B9B6] focus:border-[#E2E2E0]"
+                            />
+                            <span className="pointer-events-none absolute bottom-0 left-0 h-[1.5px] w-full origin-left scale-x-0 bg-[#0B0B0C] transition-transform duration-300 ease-out peer-focus:scale-x-100" />
+                            {form.formState.errors.confirmPassword && (
+                                <p id="confirmPassword-error" className="mt-2 text-[12px] text-[#0B0B0C] underline decoration-[#0B0B0C]/40 underline-offset-2">
+                                    {form.formState.errors.confirmPassword.message}
+                                </p>
+                            )}
+                        </div>
+                    )}
+                />
+
+                <button
+                    type="submit"
+                    disabled={isPending}
+                    className="group relative mt-1 flex h-12 w-full items-center justify-center overflow-hidden border border-[#0B0B0C] bg-[#0B0B0C] text-[0.9rem] font-medium tracking-[0.02em] text-white transition-all duration-300 hover:bg-white hover:text-[#0B0B0C] disabled:cursor-not-allowed disabled:opacity-60 sm:hover:scale-[1.01] sm:disabled:hover:scale-100"
+                >
+                    {isPending ? (
+                        <span className="flex items-center gap-2">
+                            <Loader2 size={16} className="animate-spin" strokeWidth={1.75} />
+                            Signing up
+                        </span>
+                    ) : (
+                        "Create Account"
+                    )}
+                </button>
+
+                <div className="flex items-center gap-4 py-0.5">
+                    <span className="h-px flex-1 bg-[#E2E2E0]" />
+                    <span className="font-mono text-[10px] tracking-[0.2em] text-[#B9B9B6] uppercase">
+                        or continue with
+                    </span>
+                    <span className="h-px flex-1 bg-[#E2E2E0]" />
+                </div>
+
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <button
+                        type="button"
+                        disabled={isPending}
+                        className="flex h-11 items-center justify-center gap-2 border border-[#E2E2E0] text-[0.85rem] text-[#0B0B0C] transition-colors hover:border-[#0B0B0C]"
+                    >
+                        <GoogleMark />
+                        Google
+                    </button>
+                    <button
+                        type="button"
+                        disabled={isPending}
+                        className="flex h-11 items-center justify-center gap-2 border border-[#E2E2E0] text-[0.85rem] text-[#0B0B0C] transition-colors hover:border-[#0B0B0C]"
+                    >
+                        <Image src="/github.svg" alt="GitHub Logo" width={16} height={16} />
+                        GitHub
+                    </button>
+                </div>
+            </form>
+
+            <p className="mt-6 text-center text-[13px] leading-6 text-[#6E6E6E] sm:mt-8">
+                Already have an account?{" "}
+                <Link href="/login" className="text-[#0B0B0C] underline decoration-[#0B0B0C]/30 underline-offset-4 hover:decoration-[#0B0B0C]">
+                    Login
+                </Link>
+            </p>
+
+            <style jsx global>{`
+                @keyframes fade-in-up {
+                    from {
+                        opacity: 0;
+                        transform: translateY(8px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                @media (prefers-reduced-motion: reduce) {
+                    * {
+                        animation-duration: 0.01ms !important;
+                        transition-duration: 0.01ms !important;
+                    }
+                }
+            `}</style>
         </div>
     )
 }
