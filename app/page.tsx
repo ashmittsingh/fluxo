@@ -1,19 +1,29 @@
 "use client";
 
-import { authClient} from "@/lib/auth-client"
 import { Button } from "@/components/ui/button";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTRPC } from "@/trpc/client";
+import { toast } from "sonner";
 
 
 const HomePage = () => {
-  const {data} = authClient.useSession();
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+  const { data } = useQuery(trpc.getWorkFlows.queryOptions());
+  const create = useMutation(trpc.createWorkflow.mutationOptions({
+    onSuccess: () => {
+      toast.success("Workflow created successfully");
+    },
+  }));
   return (
     <div>
       {JSON.stringify(data)}
-      {data && (
-      <Button onClick={() => authClient.signOut()}>
-        Logout
+      <Button disabled={testAi.isPending} onClick={() => testAi.mutate()}>
+        Test AI
       </Button>
-      )}
+      <Button disabled={create.isPending} onClick={() => create.mutate()}>
+        Create Workflow
+      </Button>
     </div>
   )
 }

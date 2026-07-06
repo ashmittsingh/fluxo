@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import Image from "next/image";
 
 const loginSchema = z.object({
     email: z.email("Please Enter A Valid Email Address"),
@@ -236,7 +237,7 @@ export function LoginForm() {
                         disabled={isPending}
                         className="flex h-11 items-center justify-center gap-2 border border-[#E2E2E0] text-[0.85rem] text-[#0B0B0C] transition-colors hover:border-[#0B0B0C]"
                     >
-                        {/* <Github size={15} strokeWidth={1.5} /> */}
+                       <Image src="/github.svg" alt="GitHub Logo" width={16} height={16} />
                         GitHub
                     </button>
                 </div>
