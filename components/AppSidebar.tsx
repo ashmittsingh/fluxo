@@ -47,7 +47,7 @@ const AppSidebar = () => {
                         className="h-10 gap-x-3 rounded-none px-4 hover:bg-black/[0.03]"
                         render={
                             <Link href="/workflows" prefetch>
-                                <Image src="/logo.svg" alt="Fluxo Logo" width={20} height={20} />
+                                <Image src="/icon1.png" alt="Fluxo Logo" width={20} height={20} />
                                 <span className="font-mono text-[13px] font-medium tracking-[0.2em] uppercase group-data-[collapsible=icon]:hidden">
                                     Fluxo
                                 </span>
