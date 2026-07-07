@@ -18,11 +18,120 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  subscriptions Subscription[]
+  workflows     Workflow[]
+  payments      Payment[]
+  invoices      Invoice[]
 
   @@unique([email])
   @@map("user")
 }
 
+enum PlanType {
+  FREE
+  STARTER
+  PRO
+  BUSINESS
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PENDING
+  CANCELLED
+  EXPIRED
+}
+
+enum PaymentStatus {
+  CREATED
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model Subscription {
+  id String @id @default(cuid())
+
+  userId String
+  user User @relation(fields:[userId], references:[id], onDelete:Cascade)
+
+  plan PlanType
+
+  status SubscriptionStatus @default(PENDING)
+
+  razorpaySubscriptionId String? @unique
+
+  startsAt DateTime?
+
+  expiresAt DateTime?
+
+  cancelAtPeriodEnd Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+}
+
+model Payment {
+
+  id String @id @default(cuid())
+
+  userId String
+  
+  user User @relation(fields:[userId], references:[id], onDelete:Cascade)
+  
+  plan PlanType
+
+  razorpayOrderId String @unique
+
+  razorpayPaymentId String? @unique
+
+  razorpaySignature String?
+
+  amount Int
+
+  currency String @default("INR")
+
+  status PaymentStatus @default(CREATED)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+}
+
+model Invoice {
+
+  id String @id @default(cuid())
+
+  userId String
+
+  user User @relation(fields:[userId], references:[id], onDelete:Cascade)
+
+  invoiceNumber String @unique
+
+  amount Int
+
+  currency String @default("INR")
+
+  invoiceUrl String?
+
+  createdAt DateTime @default(now())
+
+}
+
+model WebhookEvent {
+
+  id String @id @default(cuid())
+
+  event String
+
+  payload Json
+
+  processed Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+}
 model Session {
   id        String   @id
   expiresAt DateTime
@@ -75,4 +184,12 @@ model Verification {
 model Workflow {
   id String @id @default(cuid())
   name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user User @relation(fields:[userId], references:[id], onDelete:Cascade)
 }
+
+
+

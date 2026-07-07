@@ -2,7 +2,10 @@ import 'server-only';
 
 import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
 import { cache } from 'react';
-import { createTRPCContext } from './init';
+import {
+  createTRPCContext,
+  createCallerFactory,
+} from './init';
 import { makeQueryClient } from './query-client';
 import { appRouter } from './routers/_app';
 
@@ -14,4 +17,9 @@ export const trpc = createTRPCOptionsProxy({
   queryClient: getQueryClient,
 });
 
-export const caller = appRouter.createCaller(createTRPCContext());
+
+const createCaller = createCallerFactory(appRouter);
+
+export async function caller() {
+  return createCaller(await createTRPCContext());
+}
