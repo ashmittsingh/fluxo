@@ -9,7 +9,16 @@ import { toast } from "sonner";
 const HomePage = () => {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
+
   const { data } = useQuery(trpc.getWorkFlows.queryOptions());
+  const testAi = useMutation(trpc.testAi.mutationOptions({
+    onSuccess: () => {
+      toast.success("AI test completed successfully");
+    },
+    onError: (error) => {
+      toast.error(`AI test failed: ${error.message}`);
+    }
+  }));
   const create = useMutation(trpc.createWorkflow.mutationOptions({
     onSuccess: () => {
       toast.success("Workflow created successfully");
