@@ -23,6 +23,7 @@ const t = initTRPC.context<TRPCContext>().create({
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
 export const baseProcedure = t.procedure;
+
 export const protectedProcedure = baseProcedure.use(async({ ctx, next }) => {
   if(!ctx.session){
     throw new TRPCError({
@@ -37,4 +38,16 @@ export const protectedProcedure = baseProcedure.use(async({ ctx, next }) => {
       user: ctx.session.user,
     },
 });
+});
+
+export const premiumProcedure = protectedProcedure.use(async({ ctx, next }) => {
+  const customer = await polarClient.customers.getStateExternal({externalId: ctx.auth.user.id});
+
+  if(!customer.activeSubscription || customer.activeSubscriptions.length === 0){
+    throw new TRPCError({
+      code:"FORBIDDEN",
+      message:"Active Subscription Required",
+    });
+  }
+  return next({ctx: {...ctx, customer}});
 });
