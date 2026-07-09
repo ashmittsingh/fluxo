@@ -44,7 +44,7 @@ const AppSidebar = () => {
             <SidebarHeader className="border-b border-[#E2E2E0]">
                 <SidebarMenuItem>
                     <SidebarMenuButton
-                        className="h-10 gap-x-3 rounded-none px-4 hover:bg-black/[0.03]"
+                        className="h-10 gap-x-3 rounded-none px-4 hover:bg-black/3"
                         render={
                             <Link href="/workflows" prefetch>
                                 <Image src="/icon1.png" alt="Fluxo Logo" width={20} height={20} />
@@ -79,7 +79,7 @@ const AppSidebar = () => {
                                                     {isActive && (
                                                         <motion.span
                                                             layoutId="sidebar-active-rail"
-                                                            className="absolute left-0 top-1/2 h-5 w-[2px] -translate-y-1/2 bg-[#0B0B0C]"
+                                                            className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 bg-[#0B0B0C]"
                                                             transition={{ type: "spring", stiffness: 400, damping: 32 }}
                                                         />
                                                     )}
@@ -104,7 +104,7 @@ const AppSidebar = () => {
                     >
                         <StarIcon className="size-4" strokeWidth={1.5} />
                         <span className="flex-1 text-left">Upgrade to Pro</span>
-                        <span className="rounded-none border border-current px-1.5 py-0.5 font-mono text-[9px] tracking-[0.1em] group-data-[collapsible=icon]:hidden">
+                        <span className="rounded-none border border-current px-1.5 py-0.5 font-mono text-[9px] tracking-widest group-data-[collapsible=icon]:hidden">
                             PRO
                         </span>
                     </SidebarMenuButton>
@@ -112,7 +112,7 @@ const AppSidebar = () => {
                 <SidebarMenuItem>
                     <SidebarMenuButton
                         tooltip="Billing Portal"
-                        className="h-10 gap-x-4 rounded-none px-4 text-[#6E6E6E] transition-colors duration-200 hover:bg-black/[0.03] hover:text-[#0B0B0C]"
+                        className="h-10 gap-x-4 rounded-none px-4 text-[#6E6E6E] transition-colors duration-200 hover:bg-black/3 hover:text-[#0B0B0C]"
                         onClick={() => {}}
                     >
                         <CreditCardIcon className="size-4" strokeWidth={1.5} />
@@ -122,7 +122,7 @@ const AppSidebar = () => {
                 <SidebarMenuItem>
                     <SidebarMenuButton
                         tooltip="Sign Out"
-                        className="h-10 gap-x-4 rounded-none px-4 text-[#6E6E6E] transition-colors duration-200 hover:bg-black/[0.03] hover:text-[#0B0B0C]"
+                        className="h-10 gap-x-4 rounded-none px-4 text-[#6E6E6E] transition-colors duration-200 hover:bg-black/3 hover:text-[#0B0B0C]"
                         onClick={() =>
                             authClient.signOut({
                                 fetchOptions: {
