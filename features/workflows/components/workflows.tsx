@@ -1,9 +1,9 @@
 "use client";
 
-import { EntityHeader } from "@/components/entitycomponents";
+import { EntityHeader } from "@/components/EntityComponents";
 import { useSuspenseWorkflows, useCreateWorkflow } from "@/features/workflows/hooks/useworkflows";
-import { EntityContainer } from "@/components/entitycomponents";
-import { useUpgradeModal } from "@/hooks/useupgrademodal";
+import { EntityContainer } from "@/components/EntityComponents";
+import { useUpgradeModal } from "@/hooks/useUpgradeModal";
 import { useRouter } from "next/navigation";
 
 export const WorkflowsList = () => {

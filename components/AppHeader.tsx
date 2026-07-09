@@ -20,11 +20,10 @@ export const AppHeader = () => {
     const title = useCurrentPageTitle();
 
     return (
-        <header className="flex h-14 shrink-0 items-center gap-3 border-b border-[#E2E2E0] bg-white px-4 fixed w-full z-10">
+        <header className="flex h-14 shrink-0 items-center gap-3 border-b border-[#E2E2E0] bg-white px-4">
             <SidebarTrigger className="rounded-none text-[#6E6E6E] transition-colors duration-200 hover:bg-black/[0.03] hover:text-[#0B0B0C]" />
-            {/* Hairline divider between the trigger and the page label */}
+            {/* Hairline Divider Between The Trigger And The Page Label */}
             <span aria-hidden="true" className="h-4 w-px bg-[#E2E2E0]" />
-
             {title && (
                 <p className="font-mono text-[11px] font-medium tracking-[0.2em] text-[#0B0B0C] uppercase">
                     {title}
