@@ -63,8 +63,6 @@ export function LoginForm() {
 
     return (
         <div className="mx-auto w-full max-w-sm animate-[fade-in-up_0.6s_ease-out_both] px-1 sm:px-0">
-            {/* Mobile-only wordmark — the brand panel is hidden below md,
-                so identity still needs to appear above the form. */}
             <Link
                 href="/"
                 className="mb-6 inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2em] uppercase md:hidden"
@@ -109,7 +107,6 @@ export function LoginForm() {
                                 aria-describedby={form.formState.errors.email ? "email-error" : undefined}
                                 className="peer mt-2 w-full border-0 border-b border-[#E2E2E0] bg-transparent pb-2 text-[0.95rem] text-[#0B0B0C] outline-none placeholder:text-[#B9B9B6] focus:border-[#E2E2E0]"
                             />
-                            {/* Ink underline that draws in on focus — the page's signature micro-interaction */}
                             <span className="pointer-events-none absolute bottom-0 left-0 h-[1.5px] w-full origin-left scale-x-0 bg-[#0B0B0C] transition-transform duration-300 ease-out peer-focus:scale-x-100" />
                             {form.formState.errors.email && (
                                 <p id="email-error" className="mt-2 text-[12px] text-[#0B0B0C] underline decoration-[#0B0B0C]/40 underline-offset-2">
@@ -119,8 +116,6 @@ export function LoginForm() {
                         </div>
                     )}
                 />
- 
-                {/* Password */}
                 <Controller
                     control={form.control}
                     name="password"
@@ -171,7 +166,7 @@ export function LoginForm() {
                     )}
                 />
  
-                {/* Remember me — custom checkbox, no default browser styling */}
+                {/* Remember Me */}
                 <div className="flex items-center gap-2.5">
                     <input
                         id="remember"

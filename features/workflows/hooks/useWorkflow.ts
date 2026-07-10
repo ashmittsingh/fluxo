@@ -1,12 +1,13 @@
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import {toast} from "sonner";
+import { useWorkflowsParams } from "@/features/workflows/hooks/useWorkflowsParams";
 
 export function useSuspenseWorkflows() {
   const trpc = useTRPC();
-  return useSuspenseQuery(trpc.workflows.getMany.queryOptions());
+  const [params] = useWorkflowsParams();
+  return useSuspenseQuery(trpc.workflows.getMany.queryOptions(params));
 }
-
 
 export const useCreateWorkflow = () => {
   const queryClient = useQueryClient();
@@ -16,7 +17,7 @@ export const useCreateWorkflow = () => {
       onSuccess: (data) =>{
         toast.success(`WorkFlows "${data.name} Created`);
         queryClient.invalidateQueries(
-          trpc.workflows.getMany.queryOptions()
+          trpc.workflows.getMany.queryOptions({})
         )
       },
       onError: (error)=>{

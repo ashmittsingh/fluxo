@@ -1,27 +1,22 @@
 import React from 'react'
 import Link from "next/link";
-import { LoginForm } from '@/components/loginform'
+import { LoginForm } from '@/components/LoginForm'
 import { requireUnauth } from '@/lib/auth-utils'
 
 const LoginPage = async () => {
   await requireUnauth();
   return (
     <div className="flex h-svh w-full justify-center overflow-hidden bg-white">
-      {/* Caps the layout on very large screens so nothing stretches thin */}
       <div className="flex w-full max-w-[1600px] flex-col md:flex-row">
-        {/* ---------- Brand panel — hidden on mobile, split ratio grows with viewport ---------- */}
         <aside
           className="relative hidden shrink-0 flex-col justify-between overflow-hidden bg-[#0B0B0C] px-10 py-10 text-white md:flex md:w-[38%] lg:w-[42%] xl:w-[45%] xl:px-16 xl:py-12"
         >
-          {/* Subtle grain — fine premium texture instead of a flat black fill */}
           <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.05]" aria-hidden="true">
             <filter id="grain">
               <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" />
             </filter>
             <rect width="100%" height="100%" filter="url(#grain)" />
           </svg>
-
-          {/* Vertical spine label — an editorial placard detail along the seam, sm screens+ */}
           <span
             className="pointer-events-none absolute right-0 top-1/2 hidden -translate-y-1/2 translate-x-1/2 rotate-90 font-mono text-[10px] tracking-[0.4em] text-white/25 xl:block"
             aria-hidden="true"
@@ -48,8 +43,6 @@ const LoginPage = async () => {
             © {new Date().getFullYear()} Fluxo
           </p>
         </aside>
-
-        {/* ---------- Form panel ---------- */}
         <main className="flex flex-1 items-start justify-center overflow-hidden px-4 py-6 sm:px-6 sm:py-8 md:items-center md:px-12 md:py-10 lg:px-16 lg:py-12">
           <LoginForm />
         </main>

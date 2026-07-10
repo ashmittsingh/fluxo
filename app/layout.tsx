@@ -4,12 +4,13 @@ import "./globals.css";
 import { TRPCReactProvider } from "@/trpc/client";
 import { Toaster } from "@/components/ui/sonner";
 import Script from "next/script";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://fluxo.velmoratech.in/"), 
+  metadataBase: new URL("https://fluxo.velmoratech.in/"),
   title: {
     default: "Fluxo — No-Code Workflow Automation Platform | Visual Builder & Real-Time Execution",
     template: "%s | Fluxo",
@@ -75,13 +76,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <TRPCReactProvider>
-          {children}
-          <Toaster />
-        </TRPCReactProvider> 
+          <NuqsAdapter>
+            {children}
+            <Toaster />
+          </NuqsAdapter>
+        </TRPCReactProvider>
         <Script
-  src="https://checkout.razorpay.com/v1/checkout.js"
-  strategy="beforeInteractive"
-/>
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="beforeInteractive"
+        />
       </body>
     </html>
   );
