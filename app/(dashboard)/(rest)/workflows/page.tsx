@@ -4,7 +4,7 @@ import { HydrateClient } from '@/trpc/server';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Suspense } from "react";
 import type { SearchParams } from "nuqs/server";
-import { WorkFlowsContainer, WorkflowsList } from '@/features/workflows/components/Workflows';
+import { WorkFlowsContainer, WorkflowsError, WorkflowsList, WorkflowsLoading } from '@/features/workflows/components/Workflows';
 import { workflowsParamsLoader } from '@/features/workflows/server/paramsLoader';
 
 
@@ -18,8 +18,8 @@ const WorkFlows = async ({ searchParams }:Props) => {
   return (
     <WorkFlowsContainer>
       <HydrateClient>
-        <ErrorBoundary fallback={<p>Error!</p>}>
-          <Suspense fallback={<p>Loading...</p>}>
+        <ErrorBoundary fallback={<WorkflowsError />}>
+          <Suspense fallback={<WorkflowsLoading />}>
             <WorkflowsList />
           </Suspense>
         </ErrorBoundary>

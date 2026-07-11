@@ -4,6 +4,7 @@ import { cache } from 'react';
 import { headers } from 'next/headers';
 import { TRPCError } from "@trpc/server";
 import { getCurrentPlan, isPremium } from "@/lib/subscription";
+import superjson from "superjson";
 
 export const createTRPCContext = cache(async () => {
   const session = await auth.api.getSession({
@@ -18,7 +19,7 @@ export const createTRPCContext = cache(async () => {
 type TRPCContext = Awaited<ReturnType<typeof createTRPCContext>>;
 
 const t = initTRPC.context<TRPCContext>().create({
-
+  transformer: superjson,
 });
 
 export const createTRPCRouter = t.router;
