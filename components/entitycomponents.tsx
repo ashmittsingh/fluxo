@@ -128,6 +128,7 @@ interface EntitySearchProps {
  
 export const EntitySearch = ({ value, onChange, placeholder }: EntitySearchProps) => {
     return (
+
         <div className="relative w-full sm:w-56">
             <SearchIcon
                 className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-[#6E6E6E]"
