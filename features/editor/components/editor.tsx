@@ -1,26 +1,76 @@
 "use client";
 
 import { ErrorView, LoadingView } from "@/components/EntityComponents";
-import {useSuspenseWorkflow} from "@/features/workflows/hooks/useWorkflow";
+import { useSuspenseWorkflow } from "@/features/workflows/hooks/useWorkflow";
+import { useState, useCallback } from "react";
+import {
+    ReactFlow,
+    applyNodeChanges,
+    applyEdgeChanges,
+    addEdge,
+    type Node,
+    type Edge,
+    type NodeChange,
+    type EdgeChange,
+    type Connection,
+    Controls,
+    Background,
+    MiniMap,
+    Panel,
+} from "@xyflow/react";
+
+import "@xyflow/react/dist/style.css";
+import { nodeComponents } from "@/config/nodecomponents";
+import { AddNodeButton } from "./addnodebutton";
 
 export const EditorLoading = () => {
     return (
-        <LoadingView message="Loading Editor"  />
+        <LoadingView message="Loading Editor" />
     );
 }
 
 export const EditorError = () => {
     return (
-        <ErrorView  message="Failed to load editor"/>
+        <ErrorView message="Failed to load editor" />
     );
 }
 
-export const Editor = ({id}:{id:string}) => {
-    const {data: workflow} = useSuspenseWorkflow(id);
+export const Editor = ({ id }: { id: string }) => {
+    const { data: workflow } = useSuspenseWorkflow(id);
+    const [nodes, setNodes] = useState<Node[]>(workflow.nodes);
+    const [edges, setEdges] = useState<Edge[]>(workflow.edges);
 
+    const onNodesChange = useCallback(
+        (changes: NodeChange[]) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
+        [],
+    );
+    const onEdgesChange = useCallback(
+        (changes: EdgeChange[]) => setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
+        [],
+    );
+    const onConnect = useCallback(
+        (params: Connection) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
+        [],
+    );
     return (
-        <p>
-            {JSON.stringify(workflow, null, 2)}
-        </p>
+        <div style={{ width: '100vw', height: '100vh' }}>
+            <ReactFlow
+                nodes={nodes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onConnect={onConnect}
+                nodeTypes={nodeComponents}
+                fitView
+                proOptions={{ hideAttribution: true }}
+            >
+                <Background />
+                <Controls />
+                <MiniMap />
+                <Panel position="top-right">
+                    <AddNodeButton />
+                </Panel>    
+                </ReactFlow>
+        </div>
     );
 };

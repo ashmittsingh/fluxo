@@ -16,14 +16,6 @@ import {
 } from "@/components/ui/breadcrumb";
 import { useSuspenseWorkflow, useUpdateWorkflowName } from "@/features/workflows/hooks/useWorkflow";
 
-const pageTitles: Record<string, string> = {
-    workflows: "Workflows",
-    credentials: "Credentials",
-    executions: "Executions",
-    pricing: "Pricing",
-};
-
-
 export const EditorBreadcrumbs = ({ id }: { id: string }) => {
     return (
         <Breadcrumb>
@@ -128,19 +120,10 @@ export const EditorSaveButton = ({ id }: { id: string }) => {
     );
 };
 
-function useCurrentPageTitle() {
-    const pathname = usePathname();
-    const segment = pathname.split("/").filter(Boolean)[0] ?? "";
-    return pageTitles[segment] ?? null;
-}
-
 export const EditorHeader = ({ id }: { id: string }) => {
-    const title = useCurrentPageTitle();
-
     return (
         <header className="flex h-14 shrink-0 items-center gap-3 border-b border-[#E2E2E0] bg-white px-4">
             <SidebarTrigger className="rounded-none text-[#6E6E6E] transition-colors duration-200 hover:bg-black/[0.03] hover:text-[#0B0B0C]" />
-            {/* Hairline divider between the trigger and the page label */}
             <span aria-hidden="true" className="h-4 w-px bg-[#E2E2E0]" />
             <EditorBreadcrumbs id={id} />
             <EditorSaveButton id={id} />
