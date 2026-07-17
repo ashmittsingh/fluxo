@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { PencilIcon, SaveIcon } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,7 @@ export const EditorBreadcrumbs = ({ id }: { id: string }) => {
             <BreadcrumbList className="text-[13px]">
                 <BreadcrumbItem>
                     <BreadcrumbLink
-                        className="text-[#6E6E6E] transition-colors hover:text-[#0B0B0C] font-mono text-[11px] font-medium tracking-[0.2em] text-[#0B0B0C] uppercase"
+                        className="transition-colors hover:text-[#0B0B0C] font-mono text-[11px] font-medium tracking-[0.2em] text-[#0B0B0C] uppercase"
                         render={<Link href="/workflows">Workflows</Link>}
                     />
                 </BreadcrumbItem>
@@ -37,14 +36,14 @@ export const EditorNameInput = ({ id }: { id: string }) => {
     const { data: workflow } = useSuspenseWorkflow(id);
     const updateWorkflow = useUpdateWorkflowName();
     const [isEditing, setIsEditing] = useState(false);
-    const [name, setName] = useState(workflow.name);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-        if (workflow.name) {
-            setName(workflow.name);
-        }
-    }, [workflow.name]);
+    const [name, setName] = useState("");
+
+    const startEditing = () => {
+        setName(workflow.name);
+        setIsEditing(true);
+    };
 
     useEffect(() => {
         if (isEditing && inputRef.current) {
@@ -85,14 +84,14 @@ export const EditorNameInput = ({ id }: { id: string }) => {
                 onChange={(e) => setName(e.target.value)}
                 onBlur={handleSave}
                 onKeyDown={handleKeyDown}
-                className="h-7 w-auto min-w-[100px] rounded-none border-0 border-b border-[#E2E2E0] bg-transparent px-1 text-[13px] text-[#0B0B0C] shadow-none focus-visible:border-[#0B0B0C] focus-visible:ring-0 font-mono"
+                className="h-7 w-auto min-w-25 rounded-none border-0 border-b border-[#E2E2E0] bg-transparent px-1 text-[13px] text-[#0B0B0C] shadow-none focus-visible:border-[#0B0B0C] focus-visible:ring-0 font-mono"
             />
         );
     }
 
     return (
         <BreadcrumbItem
-            onClick={() => setIsEditing(true)}
+            onClick={startEditing}
             className="group flex cursor-pointer items-center gap-1.5 text-[#0B0B0C] transition-colors"
         >
             {workflow.name}
@@ -109,7 +108,7 @@ export const EditorSaveButton = ({ id }: { id: string }) => {
         <div className="ml-auto">
             <Button
                 size="sm"
-                onClick={() => {}}
+                onClick={() => { }}
                 disabled={false}
                 className="gap-1.5 rounded-none border border-[#0B0B0C] bg-[#0B0B0C] text-white shadow-none transition-colors duration-200 hover:bg-white hover:text-[#0B0B0C] disabled:cursor-not-allowed disabled:opacity-50"
             >
@@ -123,7 +122,7 @@ export const EditorSaveButton = ({ id }: { id: string }) => {
 export const EditorHeader = ({ id }: { id: string }) => {
     return (
         <header className="flex h-14 shrink-0 items-center gap-3 border-b border-[#E2E2E0] bg-white px-4">
-            <SidebarTrigger className="rounded-none text-[#6E6E6E] transition-colors duration-200 hover:bg-black/[0.03] hover:text-[#0B0B0C]" />
+            <SidebarTrigger className="rounded-none text-[#6E6E6E] transition-colors duration-200 hover:bg-black/3 hover:text-[#0B0B0C]" />
             <span aria-hidden="true" className="h-4 w-px bg-[#E2E2E0]" />
             <EditorBreadcrumbs id={id} />
             <EditorSaveButton id={id} />

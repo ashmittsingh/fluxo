@@ -1,5 +1,7 @@
 export const NodeType = {
   INITIAL: "INITIAL",
+  MANUAL_TRIGGER: "MANUAL_TRIGGER",
+  HTTP_REQUEST: "HTTP_REQUEST",
   // Future Nodes
   // TRIGGER: "TRIGGER",
   // EMAIL: "EMAIL",
