@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Check, Gift, Rocket, Star, Building2, Landmark } from "lucide-react";
-import BuyButton from "@/components/pricing/BuyButton";
+import BuyButton from "@/components/pricing/buybutton";
 import type { Plan as BillingPlan } from "@/config/pricing";
 
 interface Plan {

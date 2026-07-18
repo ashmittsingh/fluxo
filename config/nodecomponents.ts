@@ -5,6 +5,8 @@ import { InitialNode} from "@/components/initialnode";
 
 export const nodeComponents = {
     [NodeType.INITIAL]: InitialNode,
+    [NodeType.HTTP_REQUEST]: HttpRequestNode,
+    [NodeType.MANUAL_TRIGGER]: ManualTriggerNode,
 } as const satisfies NodeTypes;
 
 

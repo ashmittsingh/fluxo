@@ -14,9 +14,9 @@ import {
     ErrorView,
     LoadingView,
     EmptyView,
-} from "@/components/EntityComponents";
-import { useUpgradeModal } from "@/hooks/useUpgradeModal";
-import { useEntitySearch } from "@/hooks/useEntitySearch";
+} from "@/components/entitycomponents";
+import { useUpgradeModal } from "@/hooks/useupgrademodal";
+import { useEntitySearch } from "@/hooks/useentitysearch";
 import {
     useSuspenseWorkflows,
     useCreateWorkflow,

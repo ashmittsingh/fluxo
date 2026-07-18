@@ -1,6 +1,6 @@
 "use client";
 
-import { ErrorView, LoadingView } from "@/components/EntityComponents";
+import { ErrorView, LoadingView } from "@/components/entitycomponents";
 import { useSuspenseWorkflow } from "@/features/workflows/hooks/useWorkflow";
 import { useState, useCallback } from "react";
 import {
