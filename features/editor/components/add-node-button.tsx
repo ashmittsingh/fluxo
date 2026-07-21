@@ -3,7 +3,7 @@
 import { PlusIcon } from "lucide-react";
 import { memo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { NodeSelector } from "@/components/nodeselector";
+import { NodeSelector } from "@/components/node-selector";
 
 
 export const AddNodeButton = memo(() => {
@@ -15,12 +15,12 @@ export const AddNodeButton = memo(() => {
                 onClick={() => { }}
                 size="icon"
                 variant="outline"
-                className="bg-baground">
+                className="bg-background">
                 <PlusIcon className="size-4" />
             </Button>
         </NodeSelector>
     </>
-    )
+    );
 });
 
 AddNodeButton.displayName = "AddNodeButton";

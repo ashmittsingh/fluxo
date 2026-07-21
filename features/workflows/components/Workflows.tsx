@@ -14,7 +14,7 @@ import {
     ErrorView,
     LoadingView,
     EmptyView,
-} from "@/components/entitycomponents";
+} from "@/components/entity-components";
 import { useUpgradeModal } from "@/hooks/useupgrademodal";
 import { useEntitySearch } from "@/hooks/useentitysearch";
 import {

@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from "next/link";
-import { LoginForm } from '@/components/loginform';
+import { LoginForm } from '@/components/login-form';
 import { requireUnauth } from '@/lib/auth-utils'
 
 const LoginPage = async () => {

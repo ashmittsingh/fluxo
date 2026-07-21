@@ -1,6 +1,6 @@
 "use client";
 
-import { ErrorView, LoadingView } from "@/components/entitycomponents";
+import { ErrorView, LoadingView } from "@/components/entity-components";
 import { useSuspenseWorkflow } from "@/features/workflows/hooks/useWorkflow";
 import { useState, useCallback } from "react";
 import {
@@ -20,8 +20,8 @@ import {
 } from "@xyflow/react";
 
 import "@xyflow/react/dist/style.css";
-import { nodeComponents } from "@/config/nodecomponents";
-import { AddNodeButton } from "./addnodebutton";
+import { nodeComponents } from "@/config/node-components";
+import { AddNodeButton } from "./add-node-button";
 
 export const EditorLoading = () => {
     return (
